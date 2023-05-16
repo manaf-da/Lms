@@ -11,11 +11,11 @@ const createAUser = asyncHandler(async (req, res) => {
   const findUser = await User.findOne({ email: email });
   if (!findUser) {
     /* create a new user */
-    const createUser = await User.create(req.body);
+    const user = await User.create(req.body);
     res.status(200).json({
       status: true,
       message: "User Created successfully",
-      createUser,
+      user,
     });
   } else {
     throw new Error(`User ${req.body} already exists!`);
@@ -44,21 +44,65 @@ const loginAUser = asyncHandler(async (req, res) => {
 /* Get all users */
 const getAllUsers = asyncHandler(async (req, res) => {
   try {
-    const getUsers = await User.find();
+    const user = await User.find();
     res.status(200).json({
       status: true,
       message: "All User Fetched successfully",
-      getUsers,
+      user,
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+/* Get a single user  */
+const getSingleUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongoDbId(id);
+  try {
+    const user = await User.findById(id);
+    res.status(200).json({
+      status: true,
+      message: "Single user found successfully",
+      user,
+    });
+  } catch (error) {}
+});
+
+/* Update a user profile */
+const updateUser = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  validateMongoDbId(_id);
+  try {
+    const user = await User.findByIdAndUpdate(_id, req.body, { new: true });
+    res.json(200).json({
+      status: true,
+      message: "Profile updated successfully",
+      user,
     });
   } catch (error) {
     throw new Error(error);
   }
 });
 
-/* Update a user profile */
-const updateUser = asyncHandler((req, res) => {
-  const { _id } = req.user;
-  validateMongoDbId(_id);
+/* Delete a user */
+const deleteUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongoDbId(id);
+  try {
+    const user = await User.findByIdAndDelete(id);
+    res.status(200).json({
+      status: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
 });
 
-module.exports = { createAUser, loginAUser, getAllUsers };
+module.exports = {
+  createAUser,
+  loginAUser,
+  getAllUsers,
+  updateUser,
+  deleteUser,
+};
