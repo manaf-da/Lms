@@ -1,0 +1,202 @@
+s<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-Type" charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LMS Activation Email</title>
+    <style type="text/css">
+      /* base design */
+      body {
+        margin: 0;
+        padding: 0;
+        min-width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        background-color: #ffffff;
+        color: #000;
+      }
+
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.5;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      p {
+        margin-top: 0;
+        margin-bottom: 24px;
+      }
+
+      table td {
+        vertical-align: top;
+      }
+      /* Layout */
+      .email-wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .email-header {
+        background-color: #0c335f;
+        padding: 24px;
+        color: #ffffff;
+      }
+      .email-body {
+        padding: 24px;
+        background-color: #ffffff;
+      }
+      .email-footer {
+        background-color: #fff;
+        padding: 24px;
+      }
+      /* button */
+      .button {
+        display: inline-block;
+        background-color: #0c335f;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-wrapper">
+      <div class="email-header">
+        <h1>Welcome</h1>
+      </div>
+      <div class="email-body">
+        <p>Hell <%= user.name %>,</p>
+        <p>To activate your account , please use the activation code:</p>
+        <h2><%= activationCode %></h2>
+        <p>
+          Please enter this code on the activation page within the next 5
+          minutes
+        </p>
+        <p>Please if it is not you , you can ignore this message</p>
+      </div>
+      <div class="email-footer">
+        <p>
+          if you have any questions,please contact us T
+          <a href="mailto:manafadam@gmail.com">Serve Center</a>
+        </p>
+      </div>
+    </div>
+    <!-- 
+        
+       
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Activation</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    h2 {
+      color: #007BFF;
+    }
+
+    p {
+      color: #555;
+      font-size: 16px;
+    }
+
+    a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    a:hover {
+      background-color: #0056b3;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #888;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Email Activation</h2>
+
+  <p>Hello <%= user.name %>,</p>
+
+  <p>Thank you for registering! Please click the link below to activate your account:</p>
+
+  <a href="<%= activationUrl %>">
+    Activate Account
+  </a>
+
+  <p>If the button above does not work, you can copy and paste the following link into your browser:</p>
+  <p><%= activationUrl %></p>
+
+  <p>This activation link will expire in 5 minutes.</p>
+
+  <p class="footer">Thank you!</p>
+
+</body>
+
+</html>
+
+        
+        
+        
+        
+        <h2
+  style="margin-bottom: 32px; font-size: 24px; font-style: normal; font-weight: 700; line-height: 33px; letter-spacing: 0em; text-align: left;"
+>
+  Welcome, <%= fullName %>!
+</h2>
+<p style="margin-bottom: 32px;">
+  You're almost ready to get started. Just click the button below to verify the
+  email address for your account:
+</p>
+<div
+  style="background: #6C25C1; display: inline-block; color: white; text-decoration: none; border-radius: 4px; text-align: center; width: 151px; padding: 8px 16px 8px 16px"
+>
+  <a
+    style="margin: auto; font-size: 16px; text-decoration: none; color: white; line-height: 22px;"
+    href="<%= url.resolve(sails.config.custom.baseUrl,'/verify-email')+'?token='+encodeURIComponent(token) %>"
+    >Verify email</a
+  >
+</div>
+<p style="margin-bottom: 25px;">
+  If you have any trouble, try pasting this link in your browser:
+  <a
+    style="color: #00ACC4; word-wrap: break-word;"
+    href="<%= url.resolve(sails.config.custom.baseUrl,'/verify-email')+'?token='+encodeURIComponent(token) %>"
+    ><%=
+    url.resolve(sails.config.custom.baseUrl,'/verify-email')+'?token='+encodeURIComponent(token)
+    %></a
+  >
+</p>
+<p style="margin-bottom: 5px;">Sincerely,</p>
+<p style="margin-top: 0px;">The Boring JavaScript Stack Team</p> -->
+  </body>
+</html>

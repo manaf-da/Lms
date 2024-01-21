@@ -1,5 +1,5 @@
 import mongoose, { set } from "mongoose";
-require("dotenv").config;
+require("dotenv").config();
 
 const dbUrl: string = process.env.DB_URL || "";
 
