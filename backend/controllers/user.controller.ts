@@ -13,6 +13,7 @@ import {
   sendToken,
 } from "../utils/jwt";
 import { redis } from "../utils/redis";
+import { getUserById } from "../services/user.service";
 
 interface IRegistrationBody {
   name: string;
@@ -21,6 +22,7 @@ interface IRegistrationBody {
   avatar?: string;
 }
 
+/* Register A User */
 export const registrationUser = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -82,6 +84,7 @@ interface IActivationToken {
   activationCode: string;
 }
 
+/* Activation Token */
 export const createActivationToken = (user: any): IActivationToken => {
   const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
 
@@ -107,6 +110,8 @@ interface IActivationRequest {
   activation_token: string;
   activation_code: string;
 }
+
+/* Activation User */
 
 export const activateUser = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -243,6 +248,28 @@ export const updateAccessToken = catchAsyncError(
       res.status(200).json({
         status: "success",
         accessToken,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+declare module "express" {
+  interface Request {
+    user?: IUser;
+  }
+}
+
+/* Get User Info */
+export const getUserInfo = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = req.user?._id;
+      const userInfo = await getUserById(userId);
+      res.status(200).json({
+        success: true,
+        user: userInfo,
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
