@@ -7,12 +7,12 @@ import ejs from "ejs";
 import sendMail from "../utils/sendMail";
 import { redis } from "../utils/redis";
 import { catchAsyncError } from "../middleware/catchAsyncErrors";
-import OrderModel,{ IOrder } from '../models/order.model';
-import NotificationModel,{INotification} from "../models/notificationModel.model";
-import { newOrder } from "../services/order.service";
+import OrderModel, { IOrder } from "../models/order.model";
+import NotificationModel, {
+  INotification,
+} from "../models/notificationModel.model";
+import { getAllOrdersService, newOrder } from "../services/order.service";
 require("dotenv").config();
-
-
 
 // create order
 export const createOrder = catchAsyncError(
@@ -20,7 +20,7 @@ export const createOrder = catchAsyncError(
     try {
       const { courseId, payment_info } = req.body as IOrder;
 
-   /*    if (payment_info) {
+      /*    if (payment_info) {
         if ("id" in payment_info) {
           const paymentIntentId = payment_info.id;
           const paymentIntent = await stripe.paymentIntents.retrieve(
@@ -58,7 +58,7 @@ export const createOrder = catchAsyncError(
       };
       newOrder(data, res, next);
 
-       const mailData = {
+      const mailData = {
         order: {
           _id: course._id.toString().slice(0, 6),
           name: course.name,
@@ -69,7 +69,7 @@ export const createOrder = catchAsyncError(
             day: "numeric",
           }),
         },
-      }; 
+      };
 
       const html = await ejs.renderFile(
         path.join(__dirname, "../mails/order_confirmation.ejs"),
@@ -91,7 +91,7 @@ export const createOrder = catchAsyncError(
 
       user?.courses.push(course?._id);
 
-    /*   await redis.set(req.user?._id, JSON.stringify(user)); */
+      /*   await redis.set(req.user?._id, JSON.stringify(user)); */
 
       await user?.save();
 
@@ -100,18 +100,25 @@ export const createOrder = catchAsyncError(
         title: "New Order",
         message: `You have a new order from ${course?.name}`,
       });
-  
 
-      course.purchased = course.purchased + 1 
+      course.purchased ? (course.purchased += 1) : course.purchased;
 
-      await course.save(); 
-      
-newOrder(data,res,next)
-      
+      await course.save();
+
+      newOrder(data, res, next);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
   }
 );
 
-
+/* get all orders ----only for  admin */
+export const getAdminAllOrders = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllOrdersService(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
