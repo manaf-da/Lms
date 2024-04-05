@@ -5,6 +5,7 @@ import {
   addQuestion,
   addReview,
   allCourses,
+  deleteCourse,
   editCourse,
   getAdminAllCourses,
   getCourseByValidUser,
@@ -28,18 +29,39 @@ courseRouter.get(
   isAuthenticated,
   getCourseByValidUser
 );
-courseRouter.get('/get-courses-admin',isAuthenticated,authorizeRoles('admin'),getAdminAllCourses)
+courseRouter.get(
+  "/get-courses-admin",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getAdminAllCourses
+);
 
 courseRouter.put("/add-question", isAuthenticated, addQuestion);
 courseRouter.put("/add-answer", isAuthenticated, addAnswer);
 courseRouter.put("/add-review/:id", isAuthenticated, addReview);
-courseRouter.put("/add-replyReview", isAuthenticated,authorizeRoles("admin"), replyToReview);
-courseRouter.put('/get-courses-admin', isAuthenticated,authorizeRoles("admin"),getAdminAllCourses)
+courseRouter.put(
+  "/add-replyReview",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  replyToReview
+);
+courseRouter.put(
+  "/get-courses-admin",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getAdminAllCourses
+);
 courseRouter.put(
   "/edit-course/:id",
   isAuthenticated,
   authorizeRoles("admin"),
   editCourse
+);
+courseRouter.delete(
+  "/delete-course/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  deleteCourse
 );
 
 export default courseRouter;

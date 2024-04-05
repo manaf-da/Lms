@@ -11,6 +11,7 @@ import sendMail from "../utils/sendMail";
 import { catchAsyncError } from "../middleware/catchAsyncErrors";
 import  axios  from 'axios';
 import NotificationModel from "../models/notificationModel.model";
+import { generatePrevious12MonthsData } from "../utils/analytics.generator";
 
 
 
@@ -491,3 +492,20 @@ export const generateVideoUrl = catchAsyncError(
     }
   }
 );
+
+/* Get course analytics */
+export const getCourseAnalytics = catchAsyncError(async(req: Request, res: Response,next: NextFunction)=>{
+  try {
+      
+      const courses  = await generatePrevious12MonthsData(CourseModel)
+
+      res.status(200).json({
+          success:true,
+          courses
+      })
+  } catch (error:any) {
+      return next (new ErrorHandler(error.message,500))
+      
+  }
+})
+

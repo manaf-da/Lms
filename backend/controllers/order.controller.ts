@@ -12,6 +12,7 @@ import NotificationModel, {
   INotification,
 } from "../models/notificationModel.model";
 import { getAllOrdersService, newOrder } from "../services/order.service";
+import { generatePrevious12MonthsData } from "../utils/analytics.generator";
 require("dotenv").config();
 
 // create order
@@ -122,3 +123,21 @@ export const getAdminAllOrders = catchAsyncError(
     }
   }
 );
+
+
+/* get order analytics ---- for admin */
+export const getOrdersAnalytics = catchAsyncError(async(req: Request, res: Response,next: NextFunction)=>{
+  try {
+      
+      const orders  = await generatePrevious12MonthsData(OrderModel)
+
+      res.status(200).json({
+          success:true,
+          orders
+      })
+  } catch (error:any) {
+      return next (new ErrorHandler(error.message,500))
+      
+  }
+})
+
