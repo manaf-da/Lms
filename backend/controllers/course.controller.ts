@@ -107,7 +107,7 @@ export const singleCourse = catchAsyncError(
           "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
         );
 
-        await redis.set(courseId, JSON.stringify(course), "EX", 604800); // 7days
+        await redis.set(courseId, JSON.stringify(course), "EX", 604800); /* 7 days */
 
         res.status(200).json({
           success: true,
