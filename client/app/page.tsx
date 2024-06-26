@@ -8,7 +8,8 @@ import Hero from "../components/Hero";
 interface Props {}
 
 const Page: FC<Props> = (props) => {
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState(0);
   const [route, setRoute] = useState("Login");
 
   return (
@@ -18,8 +19,13 @@ const Page: FC<Props> = (props) => {
         description="Platform to learn and have fun"
         keywords="films,movies"
       />
-      <Header setRoute={setRoute} route={route} 
-      open={open} setOpen={setOpen}/>
+      <Header
+        open={open}
+        setOpen={setOpen}
+        activeItem={activeItem}
+        setRoute={setRoute}
+        route={route}
+      />
       <Hero />
     </div>
   );

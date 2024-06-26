@@ -13,18 +13,21 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import ThemeToggle from "./ThemeToggle"
-import SignUp from '../components/SignUp'
+import CustomModal from './CustomModal'
+import Login from '../components/Login'
+
 
 type Props = {
   open:boolean,
-  setOpen:(open: boolean) =>void
+  setOpen:(open: boolean) => void,
+  activeItem:number,
   route:string,
-  setRoute:(route:string)=>void
+  setRoute:(route:string)=> void
 
 }
 
 
-const Header:FC<Props> = ({route}) =>{
+const Header:FC<Props> = ({route,open,activeItem,setOpen,setRoute}) =>{
   
   return (
     <div className="flex max-h-screen w-full flex-col">
@@ -163,7 +166,13 @@ const Header:FC<Props> = ({route}) =>{
               <>
               {
                 open && (
-                  <SignUp/>
+                 <CustomModal
+                 open={open}
+                 setOpen={setOpen}
+                 setRoute={setRoute}
+                 activeItem={activeItem}
+                component={Login}
+                 />
 
                 )
               }
